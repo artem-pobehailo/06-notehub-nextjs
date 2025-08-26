@@ -9,11 +9,18 @@ interface ModalProps {
 
 export default function Modal({ children, onClose }: ModalProps) {
   useEffect(() => {
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
+
+    return () => {
+      document.body.style.overflow = overflow;
+      document.removeEventListener("keydown", handleEsc);
+    };
   }, [onClose]);
 
   return createPortal(

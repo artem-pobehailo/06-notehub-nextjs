@@ -34,6 +34,7 @@ export default function NoteDetailsClient() {
           <h2>{note.title}</h2>
         </div>
         <p className={css.content}>{note.content}</p>
+        {note.tag && <p className={css.tag}>Tag: {note.tag}</p>}
         <p className={css.date}>{formattedDate}</p>
       </div>
     </div>

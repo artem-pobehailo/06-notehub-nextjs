@@ -1,25 +1,11 @@
 // lib/api.ts
 
+import { NewNoteData, Note } from "@/types/note";
 import axios from "axios";
 export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
   perPage?: number;
-}
-
-export interface Note {
-  id: string;
-  title: string;
-  content: string;
-  tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface NewNoteData {
-  title: string;
-  content: string;
-  tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 }
 
 const BASE_URL = "https://notehub-public.goit.study/api";

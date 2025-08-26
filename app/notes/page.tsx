@@ -13,19 +13,18 @@ interface NotesPageProps {
 }
 
 export default async function NotesPage({ searchParams }: NotesPageProps) {
-  const currentPage = Number(searchParams?.page) || 1;
+  const { page: pageStr } = searchParams ? await searchParams : { page: "1" };
+  const currentPage = Number(pageStr) || 1;
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery<FetchNotesResponse>({
-    queryKey: ["notes", currentPage, { debouncedSearchQuery: "" }],
+  await queryClient.prefetchQuery({
+    queryKey: ["notes", currentPage, { debouncedSearch: "" }],
     queryFn: () => fetchNotes("", currentPage),
   });
 
-  const dehydratedState = dehydrate(queryClient);
-
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <NoteClient />
     </HydrationBoundary>
   );

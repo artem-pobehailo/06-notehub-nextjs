@@ -13,7 +13,7 @@ interface NotesPageProps {
 }
 
 export default async function NotesPage({ searchParams }: NotesPageProps) {
-  const { page: pageStr } = searchParams ? await searchParams : { page: "1" };
+  const pageStr = searchParams?.page || { page: "1" };
   const currentPage = Number(pageStr) || 1;
 
   const queryClient = new QueryClient();

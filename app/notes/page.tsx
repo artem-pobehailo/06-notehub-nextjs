@@ -1,19 +1,17 @@
-// app/notes/page.tsx
-
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
 import NoteClient from "./Notes.client";
-import { fetchNotes, FetchNotesResponse } from "@/lib/api";
+import { fetchNotes } from "@/lib/api";
 
 interface NotesPageProps {
-  searchParams?: { page?: string };
+  searchParams?: Promise<{ page?: string }>;
 }
 
 export default async function NotesPage({ searchParams }: NotesPageProps) {
-  const pageStr = searchParams?.page || { page: "1" };
+  const { page: pageStr } = searchParams ? await searchParams : { page: "1" };
   const currentPage = Number(pageStr) || 1;
 
   const queryClient = new QueryClient();

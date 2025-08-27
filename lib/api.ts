@@ -2,7 +2,6 @@
 
 import { NewNoteData, Note } from "@/types/note";
 import axios from "axios";
-import { number } from "yup";
 export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
@@ -43,22 +42,22 @@ export const fetchNotes = async (
 
 export const deleteNote = async (id: string): Promise<Note> => {
   try {
-    const response = await api.delete<{ note: Note }>(`/notes/${id}`);
-    return response.data.note;
+    const response = await api.delete<Note>(`/notes/${id}`);
+    return response.data;
   } catch (error) {
     console.error(`Delete note ${id} failed:`, error);
-    alert("Not seeing the notatka.");
+    alert("Not seeing the note.");
     throw error;
   }
 };
 
 export const addNote = async (noteData: NewNoteData): Promise<Note> => {
   try {
-    const response = await api.post<{ note: Note }>("/notes", noteData);
-    return response.data.note;
+    const response = await api.post<Note>("/notes", noteData);
+    return response.data;
   } catch (error) {
     console.error("Add note failed:", error);
-    alert("Not far-fetched by a notatku.");
+    alert("Not far-fetched by a note.");
     throw error;
   }
 };
@@ -69,7 +68,7 @@ export const getSingleNote = async (id: string): Promise<Note> => {
     return res.data;
   } catch (error) {
     console.error(`Get note ${id} failed:`, error);
-    alert("Do not splurge on the notatku.");
+    alert("Do not splurge on the note.");
     throw error;
   }
 };
